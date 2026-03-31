@@ -22,7 +22,7 @@ from modelscope.utils.constant import ModelFile
 
 # 工作目录，用于保存训练过程中的日志、checkpoint 等
 WORK_DIR = os.path.abspath(os.path.join(os.path.dirname(
-    __file__), "..", "tmp1", "structbert_text_classification"))
+    __file__), "..", "tmp", "structbert_text_classification"))
 # 本目录的 configuration.json：训练超参、preprocessor 类型等
 CFG_FILE = os.path.join(os.path.abspath(
     os.path.dirname(__file__)), ModelFile.CONFIGURATION)

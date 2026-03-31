@@ -1,5 +1,3 @@
-> 仓库地址：https://github.com/jinzcdev/modelscope-guide
-
 ## 目标读者与学习目标
 
 本 Notebook 面向有后端/前端研发经验、但未系统学习深度学习的同学：你不需要掌握深度学习理论，只要能把训练流程跑通、产出一个可用的文本分类模型，并能在代码里做推理调用即可。
@@ -11,8 +9,6 @@
 - **理解最小必要的工程要素**：配置文件、work_dir、checkpoint、模型导出目录
 - **跑通推理**：用 `pipeline("text-classification")` 对文本列表打分
 
----
-
 ## 平台介绍：Hugging Face vs ModelScope（魔搭）
 
 - **huggingface.co**：生态最广、教程多、模型/数据最多，主流方案以 `transformers + datasets` 为主。
@@ -22,8 +18,6 @@
 
 - **一套 API 跑通训练与推理**：训练用 `build_trainer`，推理用 `pipeline`
 - **数据集开箱即用**：`MsDataset.load("DAMO_NLP/yf_dianping")` 直接可用
-
----
 
 ## 示例介绍
 
@@ -39,8 +33,6 @@
 - **推理模型目录**：`tmp/structbert_text_classification/output`
 
 其中 `output/` 是训练器导出的可用于 `pipeline` 的模型目录（含 `configuration.json`、权重、词表等）。
-
----
 
 ## 环境准备
 
@@ -83,8 +75,6 @@ pip install -r requirements.txt
 - 可直接使用魔搭平台的免费开发环境（一般自带 CUDA/驱动 与 modelscope 的 Python 环境）
 - 使用 `pip install -r requirements/modelscope.txt` 安装兼容的依赖版本即可
 
----
-
 ## 快速开始：一键跑通训练
 
 ### 单卡训练
@@ -103,8 +93,6 @@ bash bert_text_classification/run_train_single_gpu.sh
 CUDA_VISIBLE_DEVICES=0,1 NPROC_PER_NODE=2 bash bert_text_classification/run_train_multi_gpu.sh
 ```
 
----
-
 ## 配置文件说明（你只需要理解这几点）
 
 训练配置在 `bert_text_classification/configuration.json`，关键字段：
@@ -112,9 +100,7 @@ CUDA_VISIBLE_DEVICES=0,1 NPROC_PER_NODE=2 bash bert_text_classification/run_trai
 - **`preprocessor.first_sequence` / `preprocessor.label`**：数据集中作为文本/标签的列名（本示例为 `sentence` / `label`）
 - **`train.dataloader.batch_size_per_gpu`**：显存不够就先把它调小（例如 2 → 1）
 - **`train.max_epochs`**：先跑通可以设小一点（例如 1）
-- **`train.work_dir` 与脚本 work_dir**：真正输出位置由 `train.py` 里的 `WORK_DIR` 控制（见下节）
-
----
+- **`train.work_dir` 与脚本 work_dir**：本仓库示例中，`train.py` 会显式传入 `work_dir=WORK_DIR`，因此最终输出位置以 `train.py` 为准（`configuration.json` 里的 `train.work_dir` 不作为最终生效值），仅作为配置参考。
 
 ## 训练脚本结构（面向工程的最小理解）
 
@@ -129,8 +115,6 @@ CUDA_VISIBLE_DEVICES=0,1 NPROC_PER_NODE=2 bash bert_text_classification/run_trai
   - 输出目录：`tmp/structbert_text_classification`
 - 根据训练集大小动态修正 `LinearLR.total_iters`（避免写死步数）
 
----
-
 ## 训练产物在哪里？如何用于推理？
 
 训练完成后，你需要关注这两个目录：
@@ -143,8 +127,6 @@ CUDA_VISIBLE_DEVICES=0,1 NPROC_PER_NODE=2 bash bert_text_classification/run_trai
 - `MODEL_DIR = tmp/structbert_text_classification/output`
 - 用 `pipeline("text-classification", model=MODEL_DIR, ...)` 进行推理
 
----
-
 ## 推理快速开始
 
 训练完成后，在仓库根目录执行：
@@ -152,8 +134,6 @@ CUDA_VISIBLE_DEVICES=0,1 NPROC_PER_NODE=2 bash bert_text_classification/run_trai
 ```bash
 PYTHONPATH=. python bert_text_classification/inference.py
 ```
-
----
 
 ## 常见问题（排障优先级从高到低）
 
@@ -168,8 +148,6 @@ PYTHONPATH=. python bert_text_classification/inference.py
 - **`pipeline` 找不到模型文件**
   - 确认训练已完成，且 `tmp/structbert_text_classification/output/` 存在
   - 不要把 `MODEL_DIR` 指到 `tmp/structbert_text_classification/` 根目录，推理需要的是 `output/`
-
----
 
 ## Jupyter 示例
 
