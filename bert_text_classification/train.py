@@ -48,7 +48,6 @@ def build_cfg_modify_fn(train_ds: MsDataset):
 
 
 def main():
-    # os.makedirs(WORK_DIR, exist_ok=True)
 
     # 加载训练集和验证集
     train_dataset = MsDataset.load(

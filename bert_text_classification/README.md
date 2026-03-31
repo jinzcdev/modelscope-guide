@@ -1,26 +1,4 @@
-# 大纲
-
-- 平台介绍
-  - huggingface.co
-  - modelscope.cn (魔搭平台)
-  - 为什么选择 modelscope
-- 示例介绍
-  - 使用 modelscope 平台训练 BERT 模型实现文本分类
-  - 原因：BERT 是 Transformer 架构在 NLP 领域应用的经典模型，而且大家对自然语言处理相关的模型接触较多一些
-  - 数据集：DAMO_NLP/yf_dianping (大众点评评论数据集)
-- 环境准备
-  - 个人服务器
-    - 操作系统：Linux (Ubuntu较多)
-    - 显卡（必须）：8GB 显存以上
-    - Python 环境
-      - conda
-      - 虚拟环境
-  - modelscope 平台集成服务器
-    - 直接使用魔搭平台的免费开发环境（自带 CUDA 环境）
-
----
-
-> 仓库地址：https://github.com/jinzcdev/dl-colab
+> 仓库地址：https://github.com/jinzcdev/modelscope-guide
 
 ## 目标读者与学习目标
 
@@ -66,20 +44,22 @@
 
 ## 环境准备
 
-### 方案 A：个人服务器（推荐）
+### 方案 A：个人服务器
 
 最低要求（经验值）：
 
 - **OS**：Linux（Ubuntu 常见）
-- **GPU**：>= 8GB 显存（能跑起来的底线；batch_size 很小也可以）
-- **Python**：建议 3.10+
+- **GPU**：>= 8GB 显存（能跑起来的底线；如果是更小的显存，把 `batch_size` 调小也可以，但是训练时间会更长）
+- **Python**：建议 3.11+
 
 创建虚拟环境（两种任选其一）：
 
-1. conda：
+1. miniconda：
+
+> 参考 [Miniconda 安装指南](https://www.anaconda.com/docs/getting-started/miniconda/install/overview)
 
 ```bash
-conda create -n bert-demo python=3.10 -y
+conda create -n bert-demo python=3.11 -y
 conda activate bert-demo
 ```
 
@@ -93,15 +73,15 @@ source .venv/bin/activate
 安装依赖：
 
 ```bash
-pip install -r requirements-all.txt
+pip install -r requirements.txt
 ```
 
-> 说明：仓库根目录的 `requirements.txt` 偏“通用最小集”；训练需要 `modelscope/torch` 等，建议直接装 `requirements-all.txt`。
+> 说明：仓库根目录的 `requirements.txt` 为完整的依赖版本。
 
-### 方案 B：ModelScope 平台集成服务器
+### 方案 B：ModelScope 平台集成服务器（推荐）
 
-- 可直接使用魔搭平台的免费开发环境（一般自带 CUDA/驱动）
-- 仍建议用 `pip install -r requirements-all.txt` 对齐版本
+- 可直接使用魔搭平台的免费开发环境（一般自带 CUDA/驱动 与 modelscope 的 Python 环境）
+- 使用 `pip install -r requirements/modelscope.txt` 安装兼容的依赖版本即可
 
 ---
 

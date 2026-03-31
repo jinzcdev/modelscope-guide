@@ -1,7 +1,0 @@
-torch==2.10.0
-torchvision==0.25.0
-modelscope==1.32.0
-modelscope[nlp]==1.32.0
-datasets==3.6.0
-transformers==4.57.6
-setuptools==80.9.0
